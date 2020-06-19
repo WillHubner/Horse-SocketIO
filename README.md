@@ -36,6 +36,8 @@ begin
   App.Use(Jhonson);
   App.Use(CORS);
   App.Use(SocketIO);
+  
+  StartSocket(55666);
 
   App.Start;
 end.
