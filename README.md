@@ -7,6 +7,8 @@ Na aplicação cliente, mapeie as funções que deseja, quando o request bater n
 
 O servidor Socket será startado na porta 55666.
 
+As funções serão escritas dentro do cliente, e quando o horse receber o cabeçalho [socket_client] irá redirecionar as chamadas.
+
 ```delphi
 uses
   Horse,
