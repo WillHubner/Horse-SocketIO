@@ -71,7 +71,7 @@ object fPrincipal: TfPrincipal
     Width = 513
     Height = 29
     TabOrder = 4
-    Text = '@brst'
+    Text = 'socket_name'
   end
   object mmoError: TMemo
     Left = 8
