@@ -10,7 +10,7 @@ O servidor Socket será startado na porta 55666.
 As funções serão escritas dentro do cliente, e quando o horse receber o cabeçalho [socket_client] irá redirecionar as chamadas.
 
 # Horse-SocketIO
-Middleware to Horse using SocketIO.
+Middleware for Horse using SocketIO.
 Library on https://github.com/andremussche/DelphiWebsockets
 
 To use it, put a HEADER with key socket_client and value with the name of client socket, inserted on client-server.
