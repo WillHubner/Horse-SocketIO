@@ -3,6 +3,7 @@ unit Horse.SocketIO.ServerSocket;
 interface
 
 uses
+  Horse,
   IdSocketIOHandling,
   IdServerWebsocketContext,
   IdWebsocketServer,
@@ -114,6 +115,8 @@ begin
     end);
 
   Fserver.Active      := True;
+
+  Writeln('SocketServer is running on port '+ port.ToString);
 end;
 
 function TServerSocket.Connected: Boolean;
@@ -131,8 +134,6 @@ begin
   FlistaContext := TDictionary<String,ISocketIOContext>.Create;
   FlistaClientes := TDictionary<String,ISocketIOContext>.Create;
   FlistaClienteContext := TDictionary<String,String>.Create;
-
-  Connect(55666);
 end;
 
 destructor TServerSocket.Destroy;
@@ -258,6 +259,5 @@ end;
 
 initialization
   _ServerSocket := TServerSocket.New;
-
 
 end.

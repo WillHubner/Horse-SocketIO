@@ -5,6 +5,8 @@ interface
 uses
   Horse, Horse.SocketIO.ServerSocket, Web.HTTPApp, System.SysUtils, System.JSON;
 
+procedure StartSocket(PORT : Integer);
+
 procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
@@ -23,6 +25,11 @@ begin
           )
       );
     end;
+end;
+
+procedure StartSocket(PORT : Integer);
+begin
+  _ServerSocket.Connect(PORT);
 end;
 
 end.
