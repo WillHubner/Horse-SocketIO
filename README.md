@@ -5,6 +5,8 @@ Biblioteca disponibilizada no link https://github.com/andremussche/DelphiWebsock
 Para utilizar, coloque no HEADER a chave socket_client e o valor com o nome do cliente desejado.
 Na aplicação cliente, mapeie as funções que deseja, quando o request bater no horse, será direcionado para o client-socket.
 
+O servidor Socket será startado na porta 55666.
+
 ```delphi
 uses
   Horse,
@@ -16,7 +18,7 @@ var
   App: THorse;
 
 begin
-  App := THorse.Create(2284);
+  App := THorse.Create(9000);
 
   App.Use(Jhonson);
   App.Use(CORS);
