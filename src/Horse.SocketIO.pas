@@ -11,6 +11,8 @@ procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
 
+uses Horse.SocketIO.Functions;
+
 procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
   LWebRequest: TWebRequest;
@@ -30,6 +32,8 @@ end;
 procedure StartSocket(PORT : Integer);
 begin
   _ServerSocket.Connect(PORT);
+
+  Registry;
 end;
 
 end.
