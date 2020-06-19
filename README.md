@@ -9,6 +9,8 @@ O servidor Socket será startado na porta 55666.
 
 As funções serão escritas dentro do cliente, e quando o horse receber o cabeçalho [socket_client] irá redirecionar as chamadas.
 
+Para obter a lista de clientes, chame o método /socket_clients na URL.
+
 # Horse-SocketIO
 Middleware for Horse using SocketIO.
 Library on https://github.com/andremussche/DelphiWebsockets
@@ -19,6 +21,8 @@ On client application, map the functions that you use, when the request gets on 
 The server socket will be started on port 55666.
 
 The functions should be writen on client-socket, when the horse gets the header [socket_client] will redirect the calls.
+
+To get list of socket clients call method /socket_clients on URL.
 
 ```delphi
 uses
