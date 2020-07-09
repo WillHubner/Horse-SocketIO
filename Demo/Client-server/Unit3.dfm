@@ -2,7 +2,7 @@ object fPrincipal: TfPrincipal
   Left = 0
   Top = 0
   Caption = 'Cliente'
-  ClientHeight = 632
+  ClientHeight = 547
   ClientWidth = 742
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -39,7 +39,7 @@ object fPrincipal: TfPrincipal
     Left = 8
     Top = 119
     Width = 726
-    Height = 221
+    Height = 418
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -16
@@ -54,7 +54,6 @@ object fPrincipal: TfPrincipal
     Width = 645
     Height = 29
     TabOrder = 2
-    Text = 'Edit1'
   end
   object Button2: TButton
     Left = 659
@@ -72,31 +71,5 @@ object fPrincipal: TfPrincipal
     Height = 29
     TabOrder = 4
     Text = 'socket_name'
-  end
-  object mmoError: TMemo
-    Left = 8
-    Top = 346
-    Width = 726
-    Height = 221
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Consolas'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 5
-  end
-  object mmConn: TMemo
-    Left = 320
-    Top = 493
-    Width = 726
-    Height = 221
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Consolas'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 6
   end
 end

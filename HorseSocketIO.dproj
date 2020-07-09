@@ -165,8 +165,6 @@
         <DCCReference Include="src\DelphiWebsockets\IdServerWebsocketHandling.pas"/>
         <DCCReference Include="src\DelphiWebsockets\IdSocketIOHandling.pas"/>
         <DCCReference Include="src\DelphiWebsockets\IdWebsocketServer.pas"/>
-        <DCCReference Include="src\DelphiWebsockets\superobject\superobject.pas"/>
-        <DCCReference Include="src\DelphiWebsockets\superobject\superxmlparser.pas"/>
         <DCCReference Include="src\DelphiWebsockets\Web.WebBroker.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

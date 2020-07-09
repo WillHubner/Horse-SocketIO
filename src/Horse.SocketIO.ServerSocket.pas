@@ -8,7 +8,6 @@ uses
   IdServerWebsocketContext,
   IdWebsocketServer,
   IdHTTPWebsocketClient,
-  superobject,
   IdIOHandlerWebsocket,
   IdCustomTCPServer,
   IdContext,
@@ -72,15 +71,22 @@ uses
 { TServerSocket }
 
 function TServerSocket.ClientsList: TJSONArray;
+var
+  i : Integer;
+  vArray : TArray<String>;
+  jsonobj : TJSONObject;
 begin
-  Result :=
-    TJSONArray(
-      TJSONObject(
-        TJSONObject.ParseJSONValue(
-          FlistaClientes.ToJson.AsString
-        )
-      ).GetValue('FItems')
-    );
+  Result := TJSONArray.Create;
+
+  vArray := FlistaClientes.Keys.ToArray;
+
+  for I := 0 to Pred(Length(varray)) do
+    begin
+      jsonobj := TJSONObject.Create;
+      jsonobj.AddPair('client_name', vArray[I]);
+
+      Result.Add(jsonobj);
+    end;
 end;
 
 procedure TServerSocket.Connect(port : Integer);
@@ -92,6 +98,10 @@ begin
   Fserver.SocketIO.OnDisconnect(
     procedure(const ASocket: ISocketIOContext)
     begin
+      FlistaClientes.Remove( FlistaClienteContext.Items[ASocket.ResourceName] );
+
+      FlistaClienteContext.Remove(ASocket.ResourceName);
+
       FlistaContext.Remove(ASocket.ResourceName);
     end);
 
@@ -100,18 +110,9 @@ begin
     begin
       FlistaContext.Add(ASocket.ResourceName, ASocket);
 
-      ASocket.EmitEvent(C_SERVER_EVENT, SO(['data', 'Bem vindo']), nil, nil);
+      ASocket.EmitEvent(C_SERVER_EVENT, TJSONObject.ParseJSONValue('{"data":"Bem vindo"}'), nil, nil);
 
       RegistryClient(ASocket);
-    end);
-
-  Fserver.SocketIO.OnEvent(C_CLIENT_EVENT,
-    procedure(const ASocket: ISocketIOContext; const aArgument: TSuperArray; const aCallback: ISocketIOCallback)
-    begin
-      ReceiveMessage(ASocket, aArgument[0].AsJSon);
-
-      if aCallback <> nil then
-        aCallback.SendResponse( SO(['succes', True]).AsJSon );
     end);
 
   Fserver.Active      := True;
@@ -161,15 +162,15 @@ begin
   (
     vSocket,
     ID_CLIENTE,
-    SO(['data', '']),
-    procedure(const ASocket: ISocketIOContext; const aJSON: ISuperObject; const aCallback: ISocketIOCallback)
+    TJSONObject.ParseJSONValue('{"data":""}'),
+    procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
     begin
-      FlistaClientes.Add(ajson.AsString, ASocket);
-//      TThread.Synchronize(nil,
-//        procedure
-//        begin
-//          FlistaClientes.Add(ajson.AsString, ASocket);
-//        end);
+      FlistaClientes.Add(
+        TJSONObject(ajson).GetValue('socket_user').Value,
+        ASocket
+      );
+
+      FlistaClienteContext.Add(vSocket.ResourceName, TJSONObject(ajson).GetValue('socket_user').Value);
     end,
     nil
   );
@@ -184,7 +185,7 @@ begin
   ItemsArray := TJSONArray(
     TJSONObject(
       TJSONObject.ParseJSONValue(
-        FlistaContext.ToJson.AsString
+        FlistaContext.ToString
       )
     ).GetValue('FItems')
   );
@@ -199,15 +200,10 @@ begin
       (
         vISocketIOContext,
         ID_CLIENTE,
-        SO(['data', '']),
-        procedure(const ASocket: ISocketIOContext; const aJSON: ISuperObject; const aCallback: ISocketIOCallback)
+        TJSONObject.ParseJSONValue('{"data":""}'),
+        procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
         begin
-          FlistaClientes.Add(ajson.AsString, ASocket);
-//          TThread.Synchronize(nil,
-//            procedure
-//            begin
-//              FlistaClientes.Add(ajson.AsString, ASocket);
-//            end);
+          FlistaClientes.Add(ajson.Value, ASocket);
         end,
         nil
       );
@@ -217,20 +213,17 @@ end;
 function TServerSocket.Send(id_client, CONTEXT, msg : String) : String;
 var
    _Result : String;
+
 begin
+
   Fserver.SocketIO.EmitEventTo
   (
-    FlistaClientes.Items[ '["'+id_client+'"]' ],
+    FlistaClientes.Items[ id_client ],
     CONTEXT,
-    SO(['data', msg]),
-    procedure(const ASocket: ISocketIOContext; const aJSON: ISuperObject; const aCallback: ISocketIOCallback)
+    TJSONObject.ParseJSONValue ('{"data":""}'),
+    procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
     begin
-      _Result := aJSON.AsJSon;
-//      TThread.Synchronize(nil,
-//        procedure
-//        begin
-//          _Result := aJSON.AsJSon;
-//        end);
+      _Result := aJSON.ToJSON;
     end,
     nil
   );
@@ -245,14 +238,14 @@ end;
 
 procedure TServerSocket.SendAll(msg: String);
 begin
-  Fserver.SocketIO.EmitEventToAll(C_SERVER_EVENT, SO(['data', msg]),
+  Fserver.SocketIO.EmitEventToAll(C_SERVER_EVENT, '{"data":"'+ msg+'"}',
 
-  procedure(const ASocket: ISocketIOContext; const aJSON: ISuperObject; const aCallback: ISocketIOCallback)
+  procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
     begin
       TThread.Synchronize(nil,
           procedure
           begin
-            ReceiveMessage(ASocket, aJSON.AsJSon);
+            ReceiveMessage(ASocket, aJSON.Value);
           end);
     end)
 end;

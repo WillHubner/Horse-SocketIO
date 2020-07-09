@@ -2,10 +2,11 @@
 interface
 {$I wsdefines.pas}
 uses
-  windows, SyncObjs, SysUtils, StrUtils, Classes, Generics.Collections
-  {$IFDEF SUPEROBJECT}
-  , superobject
+  {$IFDEF MSWINDOWS}
+  windows,
   {$ENDIF}
+
+  SyncObjs, SysUtils, StrUtils, Classes, Generics.Collections, System.JSON
   , IdContext
   , IdException
   , IdHTTP
@@ -28,12 +29,8 @@ type
   ISocketIOCallback = interface;
 
   TSocketIOMsg      = reference to procedure(const ASocket: ISocketIOContext; const aText: string; const aCallback: ISocketIOCallback);
-  {$IFDEF SUPEROBJECT}
-  TSocketIOMsgJSON  = reference to procedure(const ASocket: ISocketIOContext; const aJSON: ISuperObject; const aCallback: ISocketIOCallback);
-  {$ELSE}
-  TSocketIOMsgJSON  = reference to procedure(const ASocket: ISocketIOContext; const aJSON:string; const aCallback: ISocketIOCallback);
-  {$ENDIF}
-  TSocketIOEvent    = reference to procedure(const ASocket: ISocketIOContext; const aArgument: TSuperArray; const aCallback: ISocketIOCallback);
+  TSocketIOMsgJSON  = reference to procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback);
+  TSocketIOEvent    = reference to procedure(const ASocket: ISocketIOContext; const aArgument: TJSONValue; const aCallback: ISocketIOCallback);
   TSocketIONotify   = reference to procedure(const ASocket: ISocketIOContext);
   TSocketIOError    = reference to procedure(const ASocket: ISocketIOContext; const aErrorClass, aErrorMessage: string);
   TSocketIOEventError = reference to procedure(const ASocket: ISocketIOContext; const aCallback: ISocketIOCallback; E: Exception);
@@ -63,8 +60,8 @@ type
     function IsDisconnected: Boolean;
 
     {$IFDEF SUPEROBJECT}
-    procedure EmitEvent(const aEventName: string; const aData: ISuperObject; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
-    procedure SendJSON(const aJSON: ISuperObject; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);
+    procedure EmitEvent(const aEventName: string; const aData: TJSONValue; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
+    procedure SendJSON(const aJSON: TJSONValue; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);
     {$ENDIF}
     procedure EmitEvent(const aEventName: string; const aData: string; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
     procedure Send(const aData: string; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);
@@ -125,8 +122,8 @@ type
     //todo: OnEvent per socket
     //todo: store session info per connection (see Socket.IO Set + Get -> Storing data associated to a client)
     //todo: namespace using "Of"
-    procedure EmitEvent(const aEventName: string; const aData: ISuperObject; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
-    procedure SendJSON(const aJSON: ISuperObject; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);
+    procedure EmitEvent(const aEventName: string; const aData: TJSONValue; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
+    procedure SendJSON(const aJSON: TJSONValue; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);
     {$ENDIF}
   end;
 
@@ -154,7 +151,7 @@ type
     Done, Success: Boolean;
     Error: Exception;
     {$IFDEF SUPEROBJECT}
-    Data : ISuperObject;
+    Data : TJSONValue;
     {$ENDIF}
     Event: TEvent;
   public
@@ -207,7 +204,7 @@ type
     procedure WriteSocketIOEvent(const ASocket: ISocketIOContext; const aRoom, aEventName, aJSONArray: string; aCallback: TSocketIOCallback; const aOnError: TSocketIOError);
     procedure WriteSocketIOEventRef(const ASocket: ISocketIOContext; const aRoom, aEventName, aJSONArray: string; aCallback: TSocketIOCallbackRef; const aOnError: TSocketIOError);
     {$IFDEF SUPEROBJECT}
-    function  WriteSocketIOEventSync(const ASocket: ISocketIOContext; const aRoom, aEventName, aJSONArray: string; aMaxwait_ms: Cardinal = INFINITE): ISuperObject;
+    function  WriteSocketIOEventSync(const ASocket: ISocketIOContext; const aRoom, aEventName, aJSONArray: string; aMaxwait_ms: Cardinal = INFINITE): TJSONValue;
     {$ENDIF}
     procedure WriteSocketIOResult(const ASocket: ISocketIOContext; aRequestMsgNr: Integer; const aRoom, aData: string);
 
@@ -254,8 +251,8 @@ type
     procedure Send(const aMessage: string; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);
     procedure Emit(const aEventName: string; const aData: string; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
     {$IFDEF SUPEROBJECT}
-    procedure Emit(const aEventName: string; const aData: ISuperObject; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
-    function  EmitSync(const aEventName: string; const aData: ISuperObject; aMaxwait_ms: Cardinal = INFINITE): ISuperobject;
+    procedure Emit(const aEventName: string; const aData: TJSONValue; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
+    function  EmitSync(const aEventName: string; const aData: TJSONValue; aMaxwait_ms: Cardinal = INFINITE): TJSONValue;
     //procedure Emit(const aEventName: string; const aData: string; const aCallback: TSocketIOMsgJSON = nil; const aOnError: TSocketIOError = nil);overload;
     {$ENDIF}
   end;
@@ -566,8 +563,8 @@ var
   {$IFNDEF SUPEROBJECT}
   args: string;
   {$ELSE}
-  args: TSuperArray;
-  json: ISuperObject;
+  args: TJSONArray;
+  json: TJSONObject;
   //  socket: TSocketIOContext;
   {$ENDIF}
   list: TSocketIOEventList;
@@ -630,16 +627,11 @@ begin
   //'5:' [message id ('+')] ':' [message endpoint] ':' [json encoded event]
   //5::/chat:{"name":"my other event","args":[{"my":"data"}]}
   //5:1+:/chat:{"name":"GetLocations","args":[""]}
-  {$IFNDEF SUPEROBJECT}
-   name := _GetJsonMember(aText,'name');  //"my other event
-   args := _GetJsonMember(aText,'args');  //[{"my":"data"}]
-  {$ELSE}
-  json := SO(aText);
+  json := TJSONObject(TJSONObject.ParseJSONValue(aText));
   //  args := nil;
   try
-    name := json.S['name'];  //"my other event
-    args := json.A['args'];  //[{"my":"data"}]
-  {$ENDIF}
+    name := json.GetValue('name').Value;  //"my other event
+    args := TJSONArray(json.GetValue('args'));  //[{"my":"data"}]
 
     if FOnEventList.TryGetValue(name, list) then
     begin
@@ -660,11 +652,7 @@ begin
             OnEventError(AContext, callback, e)
           else
             if callback <> nil then
-              {$IFNDEF SUPEROBJECT}
-              callback.SendResponse('Error');
-              {$ELSE}
-              callback.SendResponse( SO(['Error', SO(['msg', e.message])]).AsJSon );
-              {$ENDIF}
+              callback.SendResponse( TJSONObject.ParseJSONValue('{"Error":{"msg":'+E.Message+'}').ToString );
         end;
       finally
         callback := nil;
@@ -676,7 +664,7 @@ begin
   {$IFDEF SUPEROBJECT}
   finally
 //args.Free;
-  json := nil;
+
   end;
   {$ENDIF}
 end;
@@ -853,9 +841,6 @@ var
   callbackref: TSocketIOCallbackRef;
   callbackobj: ISocketIOCallback;
   errorref: TSocketIOError;
-  {$IFDEF SUPEROBJECT}
-  error: ISuperObject;
-  {$ENDIF}
   socket: TSocketIOContext;
 begin
   if ASocket = nil then Exit;
@@ -928,12 +913,8 @@ begin
           except
             on E:Exception do
             begin
-              {$IFDEF SUPEROBJECT}
               if not callbackobj.IsResponseSend then
-                callbackobj.SendResponse( SO(['Error', SO(['Type', e.ClassName, 'Message', e.Message])]).AsJSon );
-              {$ELSE}
-              //TODO
-              {$ENDIF}
+                callbackobj.SendResponse( TJSONObject.ParseJSONValue('{"Error":{"Type":"'+e.ClassName+'","Message":"'+e.Message+'"}}').ToJSON);
             end;
           end;
         finally
@@ -959,12 +940,12 @@ begin
         callbackobj := TSocketIOCallbackObj.Create(Self, socket, imsg);
         try
           try
-            OnSocketIOJson(socket, SO(sdata), callbackobj); //, imsg, bCallback);
+            OnSocketIOJson(socket, TJSONObject.ParseJSONValue(sdata), callbackobj); //, imsg, bCallback);
           except
             on E:Exception do
             begin
               if not callbackobj.IsResponseSend then
-                callbackobj.SendResponse( SO(['Error', SO(['Type', e.ClassName, 'Message', e.Message])]).AsJSon );
+                callbackobj.SendResponse( TJSONObject.ParseJSONValue('{"Error":{"Type":"'+e.ClassName+'","Message":"'+e.Message+'"}}').ToJSON);
             end;
           end;
         finally
@@ -972,7 +953,7 @@ begin
         end
       end
       else
-        OnSocketIOJson(ASocket, SO(sdata), nil); //, imsg, bCallback);
+        OnSocketIOJson(ASocket, TJSONObject.ParseJSONValue(sdata), nil);
     end
     else
     {$ENDIF}
@@ -1007,23 +988,6 @@ begin
     begin
       FSocketIOErrorRef.Remove(imsg);
       //'[{"Error":{"Message":"Operation aborted","Type":"EAbort"}}]'
-      {$IFDEF SUPEROBJECT}
-      if ContainsText(sdata, '{"Error":') then
-      begin
-        error := SO(sdata);
-        if error.IsType(stArray) then
-          error := error.O['0'];
-        error := error.O['Error'];
-        if error.S['Message'] <> '' then
-          errorref(ASocket, error.S['Type'], error.S['Message'])
-        else
-          errorref(ASocket, 'Unknown', sdata);
-
-        FSocketIOEventCallback.Remove(imsg);
-        FSocketIOEventCallbackRef.Remove(imsg);
-        Exit;
-      end;
-      {$ENDIF}
     end;
 
     if FSocketIOEventCallback.TryGetValue(imsg, callback) then
@@ -1165,13 +1129,12 @@ end;
 
 {$IFDEF SUPEROBJECT}
 function TIdBaseSocketIOHandling.WriteSocketIOEventSync(const ASocket: ISocketIOContext; const aRoom, aEventName,
-  aJSONArray: string; aMaxwait_ms: Cardinal = INFINITE): ISuperObject;
+  aJSONArray: string; aMaxwait_ms: Cardinal = INFINITE): TJSONValue;
 var
   sresult: string;
   inr: Integer;
   promise: TSocketIOPromise;
 begin
-  Result := nil;
   if (ASocket = nil) or (ASocket.IsDisconnected) then
     raise ESocketIOException.CreateFmt('Socket is not connected, cannot send "%s" request', [aEventName]);
 
@@ -1193,7 +1156,7 @@ begin
       begin
         promise.Success := True;
         promise.Error   := nil;
-        promise.Data    := SO(aData);
+        promise.Data    := TJSONObject.ParseJSONValue(aData);
         promise.Done    := True;
         promise.Event.SetEvent;
       end);
@@ -1311,7 +1274,7 @@ var
   sresult: string;
 begin
   //6::/news:2+["callback"]
-  sresult := Format('6::%s:%d+[%s]', [aRoom, aRequestMsgNr, aData]);
+  sresult := Format('6::%s:%d+%s', [aRoom, aRequestMsgNr, aData]);
   WriteString(ASocket, sresult);
 end;
 
@@ -1410,26 +1373,24 @@ begin
   Assert(FHandling <> nil);
 
   if not Assigned(aCallback) then
-    FHandling.WriteSocketIOEvent(Self, '', aEventName, '[' + aData + ']', nil, nil)
+    FHandling.WriteSocketIOEvent(Self, '', aEventName, aData, nil, nil)
   else
   begin
-    FHandling.WriteSocketIOEventRef(Self, '', aEventName, '[' + aData + ']',
+    FHandling.WriteSocketIOEventRef(Self, '', aEventName, aData,
       procedure(const aData: string)
       begin
-        aCallback(Self, SO(aData), nil);
+        aCallback(Self, TJSONObject.ParseJSONValue(aData), nil);
       end, aOnError);
   end;
 end;
 
-{$IFDEF SUPEROBJECT}
-procedure TSocketIOContext.EmitEvent(const aEventName: string; const aData: ISuperObject; const aCallback: TSocketIOMsgJSON; const aOnError: TSocketIOError);
+procedure TSocketIOContext.EmitEvent(const aEventName: string; const aData: TJSONValue; const aCallback: TSocketIOMsgJSON; const aOnError: TSocketIOError);
 begin
   if aData <> nil then
-    EmitEvent(aEventName, aData.AsJSon, aCallback, aOnError)
+    EmitEvent(aEventName, aData.ToJSON, aCallback, aOnError)
   else
     EmitEvent(aEventName, '', aCallback, aOnError);
 end;
-{$ENDIF}
 
 function TSocketIOContext.GetCustomData: TObject;
 begin
@@ -1507,23 +1468,23 @@ begin
     FHandling.WriteSocketIOMsg(Self, '', aData,
       procedure(const aData: string)
       begin
-        aCallback(Self, SO(aData), nil);
+        aCallback(Self, TJSONObject.ParseJSONValue(aData), nil);
       end, aOnError);
   end;
 end;
 
 {$IFDEF SUPEROBJECT}
-procedure TSocketIOContext.SendJSON(const aJSON: ISuperObject;
+procedure TSocketIOContext.SendJSON(const aJSON: TJSONValue;
   const aCallback: TSocketIOMsgJSON; const aOnError: TSocketIOError);
 begin
   if not Assigned(aCallback) then
-    FHandling.WriteSocketIOJSON(Self, '', aJSON.AsJSon())
+    FHandling.WriteSocketIOJSON(Self, '', aJSON.ToString())
   else
   begin
-    FHandling.WriteSocketIOMsg(Self, '', aJSON.AsJSon(),
+    FHandling.WriteSocketIOMsg(Self, '', aJSON.ToString(),
       procedure(const aData: string)
       begin
-        aCallback(Self, SO(aData), nil);
+        aCallback(Self, TJSONObject.ParseJSONValue(aData), nil);
       end, aOnError);
   end;
 end;
@@ -1638,21 +1599,14 @@ end;
 
 {$IFDEF SUPEROBJECT}
 procedure TIdSocketIOHandling.Emit(const aEventName: string;
-  const aData: ISuperObject; const aCallback: TSocketIOMsgJSON; const aOnError: TSocketIOError);
+  const aData: TJSONValue; const aCallback: TSocketIOMsgJSON; const aOnError: TSocketIOError);
 var
   context: ISocketIOContext;
   jsonarray: string;
   isendcount: Integer;
 begin
   if aData <> nil then
-  begin
-    if aData.IsType(stArray) then
-      jsonarray := aData.AsString
-    else if aData.IsType(stString) then
-      jsonarray := '["' + aData.AsString + '"]'
-    else
-      jsonarray := '[' + aData.AsString + ']';
-  end;
+    jsonarray := aData.ToJSON;
 
   Lock;
   try
@@ -1669,7 +1623,7 @@ begin
         WriteSocketIOEventRef(context, ''{no room}, aEventName, jsonarray,
           procedure(const aData: string)
           begin
-            aCallback(context, SO(aData), nil);
+            aCallback(context, TJSONObject.ParseJSONValue(aData), nil);
           end, aOnError);
       Inc(isendcount);
     end;
@@ -1683,7 +1637,7 @@ begin
         WriteSocketIOEventRef(context, ''{no room}, aEventName, jsonarray,
           procedure(const aData: string)
           begin
-            aCallback(context, SO(aData), nil);
+            aCallback(context, TJSONObject.ParseJSONValue(aData), nil);
           end, aOnError);
       Inc(isendcount);
     end;
@@ -1695,21 +1649,14 @@ begin
   end;
 end;
 
-function TIdSocketIOHandling.EmitSync(const aEventName: string; const aData: ISuperObject; aMaxwait_ms: Cardinal = INFINITE): ISuperobject;
+function TIdSocketIOHandling.EmitSync(const aEventName: string; const aData: TJSONValue; aMaxwait_ms: Cardinal = INFINITE): TJSONValue;
 var
   firstcontext, context: ISocketIOContext;
   jsonarray: string;
   isendcount: Integer;
 begin
   if aData <> nil then
-  begin
-    if aData.IsType(stArray) then
-      jsonarray := aData.AsString
-    else if aData.IsType(stString) then
-      jsonarray := '["' + aData.AsString + '"]'
-    else
-      jsonarray := '[' + aData.AsString + ']';
-  end;
+    jsonarray := aData.ToJSON;
 
   Lock;
   try
@@ -1758,7 +1705,7 @@ begin
         WriteSocketIOEventRef(context, ''{no room}, aEventName, aData,
           procedure(const aData: string)
           begin
-            aCallback(context, SO(aData), nil);
+            aCallback(context, TJSONObject.ParseJSONValue(aData), nil);
           end, aOnError);
       Inc(isendcount);
     end;
@@ -1772,7 +1719,7 @@ begin
         WriteSocketIOEventRef(context, ''{no room}, aEventName, aData,
           procedure(const aData: string)
           begin
-            aCallback(context, SO(aData), nil);
+            aCallback(context, TJSONObject.ParseJSONValue(aData), nil);
           end, aOnError);
       Inc(isendcount);
     end;
@@ -1805,7 +1752,7 @@ begin
         WriteSocketIOMsg(context, ''{no room}, aMessage,
           procedure(const aData: string)
           begin
-            aCallback(context, SO(aData), nil);
+            aCallback(context, TJSONObject.ParseJSONValue(aData), nil);
           end, aOnError);
       Inc(isendcount);
     end;
@@ -1819,7 +1766,7 @@ begin
         WriteSocketIOMsg(context, ''{no room}, aMessage,
           procedure(const aData: string)
           begin
-            aCallback(context, SO(aData), nil);
+            aCallback(context, TJSONObject.ParseJSONValue(aData), nil);
           end, aOnError);
       Inc(isendcount);
     end;

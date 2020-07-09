@@ -206,8 +206,14 @@ const
 implementation
 
 uses
-  Math, Windows,
-  IdStream, IdStack, IdWinsock2, IdExceptionCore,
+  Math,
+  {$IFDEF MSWINDOWS}
+  IdWinsock2,
+  Windows,
+  {$ELSE}
+  IdSocksServer,
+  {$ENDIF}
+  IdStream, IdStack, IdExceptionCore,
   IdResourceStrings, IdResourceStringsCore;
 
 //frame codes
@@ -416,12 +422,12 @@ begin
   begin
     CheckForDisconnect; //disconnected during wait in "Readable()"?
     if not Opened then
-      EIdNotConnected.Toss(RSNotConnected)
+      EIdNotConnected.Create(RSNotConnected)
     else if not SourceIsAvailable then
-      EIdClosedSocket.Toss(RSStatusDisconnected);
+      EIdClosedSocket.Create(RSStatusDisconnected);
     GStack.CheckForSocketError(GStack.WSGetLastError); //check for socket error
     if ARaiseExceptionOnTimeout then
-      EIdReadTimeout.Toss(RSIdNoDataToRead)  //exit, no data can be received
+      EIdReadTimeout.Create(RSIdNoDataToRead)  //exit, no data can be received
     else
       Exit(0);
   end;
@@ -433,7 +439,7 @@ begin
     CheckForDisconnect; //disconnected in the mean time?
     GStack.CheckForSocketError(GStack.WSGetLastError); //check for socket error
     if ARaiseExceptionOnTimeout then
-      EIdNoDataToRead.Toss(RSIdNoDataToRead); //nothing read? then connection is probably closed -> exit
+      EIdNoDataToRead.Create(RSIdNoDataToRead); //nothing read? then connection is probably closed -> exit
   end;
   SetLength(VBuffer, Result);
 end;
@@ -599,7 +605,7 @@ begin
 
   Lock;
   try
-    Result := -1;
+
     if not IsWebsocket then
     begin
       {$IFDEF DEBUG_WS}
@@ -624,7 +630,7 @@ begin
         Result := WriteData(data, DataCode, fin,webBit1 in ClientExtensionBits, webBit2 in ClientExtensionBits, webBit3 in ClientExtensionBits);
       except
         FClosedGracefully := True;
-        Result := -1;
+
         Raise;
       end;
     end;
@@ -676,7 +682,7 @@ begin
     IsWebsocket   := True;
   end;
 
-  Result := -1;
+
   Lock;
   try
     if not IsWebsocket then
@@ -1065,7 +1071,7 @@ var
   strmData: TMemoryStream;
   bData: TIdBytes;
 begin
-  Result := 0;
+
   Assert(Binding <> nil);
 
   strmData := TMemoryStream.Create;

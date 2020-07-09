@@ -47,8 +47,7 @@ contains
   IdServerWebsocketHandling in 'src\DelphiWebsockets\IdServerWebsocketHandling.pas',
   IdSocketIOHandling in 'src\DelphiWebsockets\IdSocketIOHandling.pas',
   IdWebsocketServer in 'src\DelphiWebsockets\IdWebsocketServer.pas',
-  superobject in 'src\DelphiWebsockets\superobject\superobject.pas',
-  superxmlparser in 'src\DelphiWebsockets\superobject\superxmlparser.pas',
   Web.WebBroker in 'src\DelphiWebsockets\Web.WebBroker.pas';
 
 end.
+
