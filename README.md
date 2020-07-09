@@ -33,7 +33,6 @@ To get list of socket clients call method /socket_clients on URL.
 uses
   Horse,
   Horse.Jhonson,
-  Horse.CORS,
   Horse.SocketIO;
 
 var
@@ -43,7 +42,6 @@ begin
   App := THorse.Create(9000);
 
   App.Use(Jhonson);
-  App.Use(CORS);
   App.Use(SocketIO);
   
   StartSocket(55666);
