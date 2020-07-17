@@ -220,7 +220,7 @@ begin
   (
     FlistaClientes.Items[ id_client ],
     CONTEXT,
-    TJSONObject.ParseJSONValue ('{"data":""}'),
+    TJSONObject.ParseJSONValue ('{"data":"'+msg+'"}'),
     procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
     begin
       _Result := aJSON.ToJSON;
