@@ -97,6 +97,7 @@ var
   Ary : TJSONArray;
   I :integer;
 begin
+  memLog.Lines.Add(aArgument.ToJSON);
 
   Ary := TJSONArray.Create;
 
