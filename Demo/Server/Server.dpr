@@ -11,17 +11,12 @@ uses
   System.JSON,
   Horse.SocketIO;
 
-var
-  App: THorse;
-
 begin
-  App := THorse.Create(9000);
-
-  App.Use(Jhonson);
-  App.Use(CORS);
-  App.Use(SocketIO);
+  THorse
+    .Use(Jhonson)
+    .Use(CORS)
+    .Use(SocketIO)
+    .Listen(9000);
 
   StartSocket(55666);
-
-  App.Start;
 end.

@@ -1,4 +1,4 @@
-# Horse-SocketIO
+﻿# Horse-SocketIO
 Middleware for Horse using SocketIO.
 Library on https://github.com/andremussche/DelphiWebsockets
 
@@ -35,17 +35,12 @@ uses
   Horse.Jhonson,
   Horse.SocketIO;
 
-var
-  App: THorse;
-
 begin
-  App := THorse.Create(9000);
+  THorse
+    .Use(Jhonson)
+    .Use(SocketIO)
+    .Listen(9000);
 
-  App.Use(Jhonson);
-  App.Use(SocketIO);
-  
   StartSocket(55666);
-
-  App.Start;
 end.
 ```
