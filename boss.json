@@ -8,6 +8,6 @@
 	"supported": "xe+",
 	"dprojFile": "",
 	"dependencies": {
-		"github.com/hashload/horse": "^1.5.3"
+		"github.com/hashload/horse": "^2.0.0"
 	}
 }
