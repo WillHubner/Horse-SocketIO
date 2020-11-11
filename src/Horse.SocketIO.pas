@@ -10,7 +10,7 @@ procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
 
-uses Horse.SocketIO.Functions;
+uses Horse.SocketIO.Functions, Horse.Commons;
 
 procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
