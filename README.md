@@ -38,8 +38,9 @@ uses
 begin
   THorse
     .Use(Jhonson)
-    .Use(SocketIO)
-    .Listen(9000);
+    .Use(SocketIO);
+  
+  THorse.Listen(9000);
 
   StartSocket(55666);
 end.
