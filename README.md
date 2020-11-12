@@ -40,8 +40,8 @@ begin
     .Use(Jhonson)
     .Use(SocketIO);
   
-  THorse.Listen(9000);
-
   StartSocket(55666);
+  
+  THorse.Listen(9000);  
 end.
 ```
