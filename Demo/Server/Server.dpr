@@ -15,8 +15,9 @@ begin
   THorse
     .Use(Jhonson)
     .Use(CORS)
-    .Use(SocketIO)
-    .Listen(9000);
-
+    .Use(SocketIO);  
+    
   StartSocket(55666);
+  
+  THorse.Listen(9000);  
 end.
