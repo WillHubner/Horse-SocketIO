@@ -6,11 +6,12 @@ uses
   Horse, Horse.SocketIO.ServerSocket, Web.HTTPApp, System.SysUtils, System.JSON;
 
 procedure StartSocket(PORT : Integer);
+
 procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
 
-uses Horse.SocketIO.Functions, Horse.Commons;
+uses Horse.SocketIO.Functions;
 
 procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
@@ -26,15 +27,12 @@ begin
       if not (Req.Headers['content-type'] = 'application/json') then
         PreparedBody := '"'+ PreparedBody + '"';
 
-      Res.Send<TJSONValue>(
-        TJSONObject.ParseJSONValue(
-          _ServerSocket.Send(Req.Headers['socket_client'], LWebRequest.PathInfo, PreparedBody)
-        )
-      )
-      .Status(THTTPStatus.OK);
-    end
-  else
-    Next();
+      THorseHackResponse(Res).Send<TJSONValue>(
+          TJSONObject.ParseJSONValue(
+            _ServerSocket.Send(Req.Headers['socket_client'], LWebRequest.PathInfo, PreparedBody)
+          )
+      );
+    end;
 end;
 
 procedure StartSocket(PORT : Integer);
