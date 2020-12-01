@@ -213,17 +213,18 @@ end;
 function TServerSocket.Send(id_client, CONTEXT, msg : String) : String;
 var
    _Result : String;
-
+   _JSON : String;
 begin
+  _JSON := '{"data":'+msg+'}';
 
   Fserver.SocketIO.EmitEventTo
   (
     FlistaClientes.Items[ id_client ],
     CONTEXT,
-    TJSONObject.ParseJSONValue ('{"data":'+msg+'}'),
+    TJSONObject.ParseJSONValue (_json),
     procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
     begin
-      _Result := aJSON.ToJSON;
+      _Result := aJSON.ToJSON
     end,
     nil
   );
@@ -254,3 +255,4 @@ initialization
   _ServerSocket := TServerSocket.New;
 
 end.
+
