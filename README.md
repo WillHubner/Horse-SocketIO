@@ -11,6 +11,8 @@ The functions should be writen on client-socket, when the horse gets the header 
 
 To get list of socket clients call method /socket_clients on URL.
 
+Make a GET or POST request /socket + context socket.
+
 <details>
   <summary>Português</summary>
 
@@ -39,9 +41,7 @@ begin
   THorse
     .Use(Jhonson)
     .Use(SocketIO);
-  
-  StartSocket(55666);
-  
+   
   THorse.Listen(9000);  
 end.
 ```
