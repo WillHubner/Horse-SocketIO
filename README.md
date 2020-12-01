@@ -13,6 +13,9 @@ To get list of socket clients call method /socket_clients on URL.
 
 Make a GET or POST request /socket + context socket.
 
+Example:
+https://www.youtube.com/watch?v=JYLbiNEzIgs
+
 <details>
   <summary>Português</summary>
 
