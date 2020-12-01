@@ -47,7 +47,7 @@ begin
     TJSONObject.ParseJSONValue(
       _ServerSocket.Send(
         Req.Headers['socket_client'],
-        '/produtos',
+        LPath,
         LPreparedBody
       )
     )
