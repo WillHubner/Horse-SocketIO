@@ -239,16 +239,17 @@ end;
 
 procedure TServerSocket.SendAll(msg: String);
 begin
-  Fserver.SocketIO.EmitEventToAll(C_SERVER_EVENT, '{"data":"'+ msg+'"}',
-
-  procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
-    begin
-      TThread.Synchronize(nil,
-          procedure
-          begin
-            ReceiveMessage(ASocket, aJSON.Value);
-          end);
-    end)
+  Fserver.SendMessageToAll(msg);
+//  Fserver.SocketIO.EmitEventToAll(C_SERVER_EVENT, '{"data":"'+ msg+'"}',
+//
+//  procedure(const ASocket: ISocketIOContext; const aJSON: TJSONValue; const aCallback: ISocketIOCallback)
+//    begin
+//      TThread.Synchronize(nil,
+//          procedure
+//          begin
+//            ReceiveMessage(ASocket, aJSON.Value);
+//          end);
+//    end)
 end;
 
 initialization

@@ -43,15 +43,21 @@ begin
 
   LPath := Copy(LWebRequest.PathInfo, 8, length(LWebRequest.PathInfo));
 
-  Res.Send<TJSONValue>(
-    TJSONObject.ParseJSONValue(
-      _ServerSocket.Send(
-        Req.Headers['socket_client'],
-        LPath,
-        LPreparedBody
+  if Req.Headers['socket_client'] = '' then
+    begin
+      _ServerSocket.SendAll(LPreparedBody);
+      Res.Send<TJSONValue>(TJSONObject.Create.AddPair('msg', 'success!'));
+    end
+  else
+    Res.Send<TJSONValue>(
+      TJSONObject.ParseJSONValue(
+        _ServerSocket.Send(
+          Req.Headers['socket_client'],
+          LPath,
+          LPreparedBody
+        )
       )
-    )
-  ).Status(THTTPStatus.OK);
+    ).Status(THTTPStatus.OK);
 end;
 
 procedure GET_SocketClients(Req: THorseRequest; Res: THorseResponse; Next: TProc);
