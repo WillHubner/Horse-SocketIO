@@ -1,0 +1,25 @@
+<html>
+    <h1>Horse - WebSockets</h1>
+
+    <h2 id="nome"></h2>
+    
+    <script>                
+        socketWebservice = new WebSocket('ws://localhost:55666');
+
+        socketWebservice.onopen = function(msg) {
+            socketWebservice.send('connect');
+
+            console.log(msg);                           
+        };
+
+        socketWebservice.onmessage = function(msg) {
+            var Jmsg = JSON.parse(msg.data);
+            document.getElementById('nome').innerHTML = Jmsg.name;            
+        };
+
+        socketWebservice.onclose = function(msg) {
+            console.log(msg);
+        };
+
+    </script>    
+</html>
