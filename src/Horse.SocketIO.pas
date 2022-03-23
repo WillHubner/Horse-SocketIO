@@ -3,14 +3,16 @@ unit Horse.SocketIO;
 interface
 
 uses
-  Horse, Horse.SocketIO.ServerSocket, Web.HTTPApp, System.SysUtils, System.JSON;
+  Horse,
+  Horse.SocketIO.ServerSocket;
 
 procedure StartSocket(PORT : Integer);
 procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
 
-uses Horse.SocketIO.Functions, Horse.Commons;
+uses
+  System.SysUtils, System.JSON, Horse.SocketIO.Functions;
 
 procedure SocketIO(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 begin
@@ -19,7 +21,8 @@ end;
 
 procedure StartSocket(PORT : Integer);
 begin
-  _ServerSocket.Connect(PORT);
+  _ServerSocket := TSocketServer.New;
+  _ServerSocket.StartServer(PORT);
 
   Registry;
 end;

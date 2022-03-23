@@ -37,17 +37,14 @@ requires
 contains
   Horse.SocketIO.Functions in 'src\Horse.SocketIO.Functions.pas',
   Horse.SocketIO in 'src\Horse.SocketIO.pas',
+  GenericSocket.Client in 'src\GenericSocket\GenericSocket.Client.pas',
+  GenericSocket.Interfaces in 'src\GenericSocket\GenericSocket.Interfaces.pas',
+  GenericSocket.Message in 'src\GenericSocket\GenericSocket.Message.pas',
+  GenericSocket in 'src\GenericSocket\GenericSocket.pas',
+  GenericSocket.Server in 'src\GenericSocket\GenericSocket.Server.pas',
   Horse.SocketIO.ServerSocket in 'src\Horse.SocketIO.ServerSocket.pas',
-  IdHTTPWebsocketClient in 'src\DelphiWebsockets\IdHTTPWebsocketClient.pas',
-  IdIOHandlerWebsocket in 'src\DelphiWebsockets\IdIOHandlerWebsocket.pas',
-  IdServerBaseHandling in 'src\DelphiWebsockets\IdServerBaseHandling.pas',
-  IdServerIOHandlerWebsocket in 'src\DelphiWebsockets\IdServerIOHandlerWebsocket.pas',
-  IdServerSocketIOHandling in 'src\DelphiWebsockets\IdServerSocketIOHandling.pas',
-  IdServerWebsocketContext in 'src\DelphiWebsockets\IdServerWebsocketContext.pas',
-  IdServerWebsocketHandling in 'src\DelphiWebsockets\IdServerWebsocketHandling.pas',
-  IdSocketIOHandling in 'src\DelphiWebsockets\IdSocketIOHandling.pas',
-  IdWebsocketServer in 'src\DelphiWebsockets\IdWebsocketServer.pas',
-  Web.WebBroker in 'src\DelphiWebsockets\Web.WebBroker.pas';
+  Web.WebBroker in 'src\GenericSocket\Web.WebBroker.pas';
 
 end.
+
 

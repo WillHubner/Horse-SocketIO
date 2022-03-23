@@ -4,80 +4,56 @@ interface
 
 uses
   Horse,
-  Horse.SocketIO.ServerSocket,
-  System.JSON,
-  Web.HTTPApp;
+  Horse.SocketIO,
+  Horse.SocketIO.ServerSocket;
 
 procedure Registry();
 procedure GET_SocketClients(Req: THorseRequest; Res: THorseResponse; Next: TProc);
-procedure POST_clients(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 procedure Middleware(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 
 implementation
 
 uses
-  System.SysUtils;
+  System.SysUtils, System.JSON;
 
 procedure Registry();
 begin
-  THorse.GetInstance.Get('/socket_clients', GET_SocketClients);
-  THorse.GetInstance.Post('/reg_clients', POST_clients);
-  THorse.GetInstance.Get('/socket', Middleware);
-  THorse.GetInstance.Get('/socket/:id', Middleware);
-  THorse.GetInstance.Post('/socket/:id', Middleware);
+  THorse.Get('/socket_clients', GET_SocketClients);
+  THorse.Get('/socket', Middleware);
+  THorse.Get('/socket/:id', Middleware);
+  THorse.Post('/socket/:id', Middleware);
 end;
 
 procedure Middleware(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 var
-  LWebRequest: TWebRequest;
   LPreparedBody : String;
   LPath : String;
+  LResponse : String;
 begin
-  LWebRequest := THorseHackRequest(Req).GetWebRequest;
-
   LPreparedBody := Req.Body;
 
   if not (Req.Headers['content-type'] = 'application/json') then
     LPreparedBody := '"'+ LPreparedBody + '"';
 
-  LPath := Copy(LWebRequest.PathInfo, 8, length(LWebRequest.PathInfo));
+  LPath := Copy(Req.RawWebRequest.PathInfo, 8, length(Req.RawWebRequest.PathInfo));
 
   if Req.Headers['socket_client'] = '' then
     begin
-      _ServerSocket.SendAll(LPreparedBody);
+      _ServerSocket.Send('', LPath, LPreparedBody);
       Res.Send<TJSONValue>(TJSONObject.Create.AddPair('msg', 'success!'));
     end
   else
-    Res.Send<TJSONValue>(
-      TJSONObject.ParseJSONValue(
-        _ServerSocket.Send(
-          Req.Headers['socket_client'],
-          LPath,
-          LPreparedBody
-        )
-      )
-    ).Status(THTTPStatus.OK);
+    LResponse := _ServerSocket.Send( Req.Headers['socket_client'], LPath, LPreparedBody );
+
+    Res.Send<TJSONValue>( TJSONObject.ParseJSONValue( LResponse ) ).Status(THTTPStatus.OK);
 end;
 
 procedure GET_SocketClients(Req: THorseRequest; Res: THorseResponse; Next: TProc);
 begin
   Res.Send<TJSONArray>(
-    _ServerSocket.ClientsList
+    _ServerSocket.ClientList
   );
-end;
-
-procedure POST_clients(Req: THorseRequest; Res: THorseResponse; Next: TProc);
-begin
-  try
-    try
-      _ServerSocket.Registry_clients;
-    except
-      Res.Send('Erro ao executar!').Status(400)
-    end;
-  finally
-    Res.Send('Clientes Registrados!')
-  end;
 end;
 
 end.
