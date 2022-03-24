@@ -1,0 +1,14 @@
+{
+	"hash": "d41d8cd98f00b204e9800998ecf8427e",
+	"updated": "2022-03-23T14:49:08.2171236-04:00",
+	"installedModules": {
+		"https://github.com/willhubner/genericsocket": {
+			"name": "genericsocket",
+			"version": "1.0.1",
+			"hash": "38fee323257ad1d328715cdbf006a498",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		}
+	}
+}

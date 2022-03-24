@@ -1,0 +1,11 @@
+{
+	"name": "Client",
+	"description": "",
+	"version": "1.0.0",
+	"homepage": "",
+	"mainsrc": "./",
+	"projects": [],
+	"dependencies": {
+		"https://github.com/willhubner/genericsocket": "^1.0.1"
+	}
+}
