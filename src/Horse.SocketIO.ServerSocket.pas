@@ -69,7 +69,7 @@ end;
 
 procedure TSocketServer.StartServer(aPort: Integer);
 begin
-  FGenericSocket.SocketServer.Start;
+  FGenericSocket.SocketServer.Start(aPort);
 end;
 
 end.

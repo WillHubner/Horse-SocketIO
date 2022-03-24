@@ -28,6 +28,6 @@ begin
 end;
 
 initialization
-  StartSocket(55666);
+  StartSocket(8050);
 
 end.
