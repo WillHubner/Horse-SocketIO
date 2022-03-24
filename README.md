@@ -25,6 +25,11 @@ end.
 ```
 
 ## Client Side ->
+Install *GenericSocket*
+``` sh
+boss install willhubner/genericsocket
+```
+
 ```delphi
   TGenericSocket
     .New
