@@ -9,6 +9,22 @@
 			"artifacts": {},
 			"failed": false,
 			"changed": false
+		},
+		"github.com/hashload/jhonson": {
+			"name": "jhonson",
+			"version": "1.1.4",
+			"hash": "7f48e0509b98505a12fa80ee39b53aea",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
+		"https://github.com/willhubner/genericsocket": {
+			"name": "genericsocket",
+			"version": "1.0.1",
+			"hash": "38fee323257ad1d328715cdbf006a498",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
 		}
 	}
 }

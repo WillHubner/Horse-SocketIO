@@ -1,5 +1,6 @@
 ﻿# Horse-SocketIO
 Middleware for Horse using SocketIO.
+Library on https://github.com/andremussche/DelphiWebsockets
 
 To use it, put a HEADER with key socket_client and value with the name of client socket, inserted on client-server.
 On client application, map the functions that you use, when the request gets on horse, will be directed to client-socket.

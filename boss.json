@@ -6,6 +6,8 @@
 	"mainsrc": "src/",
 	"projects": [],
 	"dependencies": {
-		"github.com/hashload/horse": "^2.0.0"
+		"github.com/hashload/horse": "^2.0.0",
+		"github.com/hashload/jhonson": "^1.1.4",
+		"https://github.com/willhubner/genericsocket": "^1.0.1"
 	}
 }

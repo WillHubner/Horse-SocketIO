@@ -1,37 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>2022/03/23 09:34:05.000.297,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdIOHandlerWebsocket.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.237,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerSocketIOHandling.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.218,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerWebsocketContext.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.314,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdHTTPWebsocketClient.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.023,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\Web.WebBroker.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.161,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdWebsocketServer.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.200,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerWebsocketHandling.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.279,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerBaseHandling.pas=</Transaction>
-    <Transaction>2022/03/23 09:34:05.000.261,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerIOHandlerWebsocket.pas=</Transaction>
     <Transaction>2022/03/23 09:34:05.000.182,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdSocketIOHandling.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.161,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdWebsocketServer.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.297,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdIOHandlerWebsocket.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.218,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerWebsocketContext.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.237,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerSocketIOHandling.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.279,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerBaseHandling.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.023,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\Web.WebBroker.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.314,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdHTTPWebsocketClient.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.261,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerIOHandlerWebsocket.pas=</Transaction>
+    <Transaction>2022/03/23 09:34:05.000.200,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\DelphiWebsockets\IdServerWebsocketHandling.pas=</Transaction>
     <Transaction>2022/03/23 09:34:36.000.941,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Client.pas</Transaction>
     <Transaction>2022/03/23 09:34:37.000.034,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Interfaces.pas</Transaction>
-    <Transaction>2022/03/23 09:34:37.000.160,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.pas</Transaction>
     <Transaction>2022/03/23 09:34:37.000.209,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Server.pas</Transaction>
     <Transaction>2022/03/23 09:34:37.000.083,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Message.pas</Transaction>
+    <Transaction>2022/03/23 09:34:37.000.160,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.pas</Transaction>
     <Transaction>2022/03/23 09:47:27.000.897,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\Horse.SocketIO.ServerSocket.pas=</Transaction>
     <Transaction>2022/03/23 09:48:03.000.576,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\Horse.SocketIO.ServerSocket.pas</Transaction>
     <Transaction>2022/03/23 09:54:08.000.577,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\Horse.SocketIO.ServerSocket.pas=</Transaction>
-    <Transaction>2022/03/23 09:54:45.000.497,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Message.pas</Transaction>
     <Transaction>2022/03/23 09:54:45.000.564,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.pas</Transaction>
-    <Transaction>2022/03/23 09:54:45.000.382,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Client.pas</Transaction>
-    <Transaction>2022/03/23 09:54:45.000.439,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Interfaces.pas</Transaction>
     <Transaction>2022/03/23 09:54:45.000.623,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Server.pas</Transaction>
+    <Transaction>2022/03/23 09:54:45.000.382,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Client.pas</Transaction>
+    <Transaction>2022/03/23 09:54:45.000.497,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Message.pas</Transaction>
+    <Transaction>2022/03/23 09:54:45.000.439,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Interfaces.pas</Transaction>
     <Transaction>2022/03/23 10:15:28.000.706,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\Unit1.pas</Transaction>
-    <Transaction>2022/03/23 10:17:19.000.564,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\Horse.SocketIO.ServerSocket.pas=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\Unit1.pas</Transaction>
+    <Transaction>2022/03/23 10:17:19.000.564,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\Unit1.pas=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\Horse.SocketIO.ServerSocket.pas</Transaction>
     <Transaction>2022/03/23 10:32:42.000.617,=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\Unit1.pas</Transaction>
-    <Transaction>2022/03/23 10:33:04.000.859,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\Web.WebBroker.pas=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\Unit1.pas</Transaction>
+    <Transaction>2022/03/23 10:33:04.000.859,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\Unit1.pas=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\Web.WebBroker.pas</Transaction>
     <Transaction>2022/03/23 10:33:57.000.460,=inet.dcp</Transaction>
+    <Transaction>2022/03/23 10:33:57.000.518,=IndyProtocols.dcp</Transaction>
     <Transaction>2022/03/23 10:33:57.000.437,=rtl.dcp</Transaction>
     <Transaction>2022/03/23 10:33:57.000.485,=IndySystem.dcp</Transaction>
     <Transaction>2022/03/23 10:33:57.000.553,=IndyCore.dcp</Transaction>
-    <Transaction>2022/03/23 10:33:57.000.518,=IndyProtocols.dcp</Transaction>
+    <Transaction>2022/03/24 08:06:21.319,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Server.pas=</Transaction>
+    <Transaction>2022/03/24 08:06:21.351,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Message.pas=</Transaction>
+    <Transaction>2022/03/24 08:06:21.370,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Interfaces.pas=</Transaction>
+    <Transaction>2022/03/24 08:06:21.385,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.Client.pas=</Transaction>
+    <Transaction>2022/03/24 08:06:21.407,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\GenericSocket.pas=</Transaction>
+    <Transaction>2022/03/24 08:06:36.399,C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\Web.WebBroker.pas=C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\src\GenericSocket\Web.WebBroker.pas</Transaction>
   </Transactions>
 </BorlandProject>
