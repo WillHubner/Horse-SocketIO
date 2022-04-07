@@ -44,9 +44,23 @@ begin
       Res.Send<TJSONValue>(TJSONObject.Create.AddPair('msg', 'success!'));
     end
   else
-    LResponse := _ServerSocket.Send( Req.Headers['socket_client'], LPath, LPreparedBody );
+    if (pos(Req.Headers['socket_client'], _ServerSocket.ClientList.ToJSON) > 0) then
+      begin
+        LResponse := _ServerSocket.Send( Req.Headers['socket_client'], LPath, LPreparedBody );
 
-    Res.Send<TJSONValue>( TJSONObject.ParseJSONValue( LResponse ) ).Status(THTTPStatus.OK);
+        Res.Send<TJSONValue>(
+          TJSONObject.ParseJSONValue(
+            TJSONObject.ParseJSONValue( LResponse )
+              .GetValue<TJSONValue>('message').Value
+          )
+        ).Status(THTTPStatus.OK);
+      end
+    else
+      begin
+        Res.Send<TJSONValue>(
+          TJSONObject.Create.AddPair('error', 'Item not found.')
+        ).Status(THTTPStatus.NotFound);
+      end;
 end;
 
 procedure GET_SocketClients(Req: THorseRequest; Res: THorseResponse; Next: TProc);
