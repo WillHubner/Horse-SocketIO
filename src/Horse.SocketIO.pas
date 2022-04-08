@@ -29,8 +29,9 @@ end;
 function SocketIO(aPort : Integer) : THorseCallback;
 begin
   PORT := aPort;
-  StartSocket;
   Result := Middleware;
+
+  StartSocket;
 end;
 
 procedure Middleware(Req: THorseRequest; Res: THorseResponse; Next: TProc);
@@ -45,7 +46,5 @@ begin
 
   Registry;
 end;
-
-//initialization
 
 end.
