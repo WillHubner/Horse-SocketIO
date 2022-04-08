@@ -33,9 +33,6 @@ var
 begin
   LPreparedBody := Req.Body;
 
-  if not (Req.Headers['content-type'] = 'application/json') then
-    LPreparedBody := '"'+ LPreparedBody + '"';
-
   LPath := Copy(Req.RawWebRequest.PathInfo, 8, length(Req.RawWebRequest.PathInfo));
 
   if Req.Headers['socket_client'] = '' then
@@ -46,7 +43,7 @@ begin
   else
     if (pos(Req.Headers['socket_client'], _ServerSocket.ClientList.ToJSON) > 0) then
       begin
-        LResponse := _ServerSocket.Send( Req.Headers['socket_client'], LPath, LPreparedBody );
+        LResponse := _ServerSocket.Send( Req.Headers['socket_client'], LPath+'?'+LPreparedBody, LPreparedBody );
 
         Res.Send<TJSONValue>(
           TJSONObject.ParseJSONValue(
