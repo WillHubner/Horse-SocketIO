@@ -49,10 +49,7 @@ begin
         LResponse := _ServerSocket.Send( Req.Headers['socket_client'], LPath, LPreparedBody );
 
         Res.Send<TJSONValue>(
-          TJSONObject.ParseJSONValue(
-            TJSONObject.ParseJSONValue( LResponse )
-              .GetValue<TJSONValue>('message').Value
-          )
+          TJSONObject.ParseJSONValue( LResponse ).GetValue<TJSONValue>('message')
         ).Status(THTTPStatus.OK);
       end
     else

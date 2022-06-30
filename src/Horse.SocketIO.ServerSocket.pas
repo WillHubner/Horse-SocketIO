@@ -43,7 +43,6 @@ begin
 
   for var I := 0 to Pred(Length(Clientes)) do
     Result.Add(Clientes[I]);
-
 end;
 
 constructor TSocketServer.Create;
@@ -63,8 +62,15 @@ begin
 end;
 
 function TSocketServer.Send(aClient, aPath, aMessage: String): String;
+var
+  PreparedMessage : String;
 begin
-  Result := FGenericSocket.SocketServer.Send(aClient, aPath).JSONValue.ToJSON;
+  if aMessage = '' then
+    PreparedMessage := aPath
+  else
+    PreparedMessage := aPath+'?'+aMessage;
+
+  Result := FGenericSocket.SocketServer.Send(aClient, PreparedMessage).JSONValue.ToJSON;
 end;
 
 procedure TSocketServer.StartServer(aPort: Integer);
