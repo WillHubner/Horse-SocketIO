@@ -4,8 +4,8 @@
 	"installedModules": {
 		"github.com/hashload/horse": {
 			"name": "horse",
-			"version": "v2.0.14",
-			"hash": "38c6bebdc7b9712d6e5856d299289a26",
+			"version": "3.0.1",
+			"hash": "2b63e2de4ec51f4c67536dfae15b61b7",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -18,10 +18,18 @@
 			"failed": false,
 			"changed": false
 		},
+		"https://github.com/willhubner/genericsocket": {
+			"name": "genericsocket",
+			"version": "1.0.3",
+			"hash": "1e748e0d1515e7f9457af04cacf81bb9",
+			"artifacts": {},
+			"failed": false,
+			"changed": false
+		},
 		"https://github.com/willhubner/horse-socketio": {
 			"name": "horse-socketio",
-			"version": "2.0.0",
-			"hash": "b69935beb2de693825f9be9f710be161",
+			"version": "2.1.2",
+			"hash": "a6ea7e0b2f00c7d26b825f4fc8a8760c",
 			"artifacts": {},
 			"failed": false,
 			"changed": false

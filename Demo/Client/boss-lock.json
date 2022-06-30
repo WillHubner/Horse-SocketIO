@@ -4,8 +4,8 @@
 	"installedModules": {
 		"https://github.com/willhubner/genericsocket": {
 			"name": "genericsocket",
-			"version": "1.0.1",
-			"hash": "38fee323257ad1d328715cdbf006a498",
+			"version": "1.0.3",
+			"hash": "1e748e0d1515e7f9457af04cacf81bb9",
 			"artifacts": {},
 			"failed": false,
 			"changed": false

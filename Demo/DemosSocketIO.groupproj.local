@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2022/03/24 08:14:29.198,C:\Users\Willian Hubner\Desktop\SocketIO\DemosSocketIO.groupproj=C:\Users\Willian Hubner\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj</Transaction>
+	<Transactions>
+    <Transaction>2022/03/24 08:14:29.000.198,C:\Users\Willian Hubner\Documents\Embarcadero\Studio\Projects\ProjectGroup1.groupproj=C:\Users\Willian Hubner\Desktop\SocketIO\DemosSocketIO.groupproj</Transaction>
   </Transactions>
-  <Default.Personality>
-    <Projects ActiveProject="C:\Users\Willian Hubner\Desktop\SocketIO\Client\ClientSide.dproj"/>
-  </Default.Personality>
+	<Default.Personality>
+		<Projects ActiveProject="C:\Users\Willian Hubner\Desktop\Horse-SocketIO-master\Demo\Client\ClientSide.dproj"/>
+	</Default.Personality>
 </BorlandProject>

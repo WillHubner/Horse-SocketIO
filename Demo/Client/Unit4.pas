@@ -35,7 +35,7 @@ procedure TForm4.Button1Click(Sender: TObject);
 begin
   ClientSocket.SocketClient
     .RegisterCallback('/produtos', SocketProdutos)
-    .Connect('192.168.0.128', 8080, '@brst');
+    .Connect('localhost', 8050, '@brst');
 end;
 
 procedure TForm4.FormCreate(Sender: TObject);
