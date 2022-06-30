@@ -30,6 +30,7 @@ var
   LPreparedBody : String;
   LPath : String;
   LResponse : String;
+  LPreparedResponse : String;
 begin
   LPreparedBody := Req.Body;
 
@@ -48,8 +49,13 @@ begin
       begin
         LResponse := _ServerSocket.Send( Req.Headers['socket_client'], LPath, LPreparedBody );
 
+        LPreparedResponse := TJSONObject.ParseJSONValue( LResponse ).GetValue<TJSONValue>('message').Value;
+
+        if not (LPreparedResponse.StartsWith('{') or LPreparedResponse.StartsWith('['))  then
+          LPreparedResponse := '"'+LPreparedResponse+'"';
+
         Res.Send<TJSONValue>(
-          TJSONObject.ParseJSONValue( LResponse ).GetValue<TJSONValue>('message')
+          TJSONObject.ParseJSONValue(LPreparedResponse)
         ).Status(THTTPStatus.OK);
       end
     else
