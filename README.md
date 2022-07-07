@@ -71,7 +71,7 @@ https://www.youtube.com/watch?v=JYLbiNEzIgs
 
   ```
   Middleware para Horse utilizando SocketIO.
-  Biblioteca disponibilizada no link https://github.com/andremussche/DelphiWebsockets
+  Biblioteca disponibilizada no link https://www.youtube.com/watch?v=nd2oqME0JAg
 
   Para utilizar, coloque no HEADER a chave socket_client e o valor com o nome do cliente desejado.
   Na aplicação cliente, mapeie as funções que deseja, quando o request bater no horse, será direcionado para o client-socket.
